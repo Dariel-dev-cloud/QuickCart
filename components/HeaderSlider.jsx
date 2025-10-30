@@ -6,24 +6,24 @@ const HeaderSlider = () => {
   const sliderData = [
     {
       id: 1,
-      title: "Experience Pure Sound - Your Perfect Headphones Awaits!",
-      offer: "Limited Time Offer 30% Off",
+      title: "Experimenta sonido puro — ¡Tus auriculares perfectos te esperan!",
+      offer: "Oferta por tiempo limitado 30% de descuento",
       buttonText1: "Buy now",
       buttonText2: "Find more",
       imgSrc: assets.header_headphone_image,
     },
     {
       id: 2,
-      title: "Next-Level Gaming Starts Here - Discover PlayStation 5 Today!",
-      offer: "Hurry up only few lefts!",
+      title: "El gaming de siguiente nivel empieza aquí — ¡Descubre PlayStation 5 hoy!",
+      offer: "¡Apresúrate, quedan pocas unidades!",
       buttonText1: "Shop Now",
       buttonText2: "Explore Deals",
       imgSrc: assets.header_playstation_image,
     },
     {
       id: 3,
-      title: "Power Meets Elegance - Apple MacBook Pro is Here for you!",
-      offer: "Exclusive Deal 40% Off",
+      title: "Potencia y elegancia se unen — ¡El Apple MacBook Pro está aquí para ti!",
+      offer: "Oferta exclusiva 40% de descuento",
       buttonText1: "Order Now",
       buttonText2: "Learn More",
       imgSrc: assets.header_macbook_image,
@@ -87,9 +87,8 @@ const HeaderSlider = () => {
           <div
             key={index}
             onClick={() => handleSlideChange(index)}
-            className={`h-2 w-2 rounded-full cursor-pointer ${
-              currentSlide === index ? "bg-orange-600" : "bg-gray-500/30"
-            }`}
+            className={`h-2 w-2 rounded-full cursor-pointer ${currentSlide === index ? "bg-orange-600" : "bg-gray-500/30"
+              }`}
           ></div>
         ))}
       </div>
