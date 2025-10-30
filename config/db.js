@@ -1,7 +1,6 @@
-
 import mongoose from 'mongoose';
 
-const uri = proccess.env.MONGODB_URI;
+const uri = process.env.MONGODB_URI; // ✅ CORRECTO: "process"
 
 const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
 
