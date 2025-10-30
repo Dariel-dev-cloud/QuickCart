@@ -1,29 +1,20 @@
-import mongoose from "mongoose";
 
-let cached = global.mongoose
+import mongoose from 'mongoose';
 
-if (!cached) {
-    cached = global.mongoose = { conn: null, promise: null };
-}
+const uri = proccess.env.MONGODB_URI;
 
-async function connectDB() {
-    if (cached.conn) {
-        return cached.conn;
+const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
+
+export async function run() {
+    try {
+
+        await mongoose.connect(uri, clientOptions);
+        await mongoose.connection.db.admin().command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    } finally {
+        await mongoose.disconnect();
     }
-
-    if (!cached.promise) {
-        const opts = {
-            bufferCommands: false,
-        }
-
-        cached.promise = mongoose.connect(`${process.env.MONGODB_URI}/quickcart`, opts).then(mongoose => {
-            return mongoose;
-        })
-    }
-
-    cached.conn = await cached.promise;
-    return cached.conn;
-
 }
+run().catch(console.dir);
 
-export default connectDB;
+

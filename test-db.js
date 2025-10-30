@@ -1,22 +1,44 @@
+import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import connectDB from './config/db.js';
 
-// ⚡ IMPORTANTE: Cargar variables de entorno PRIMERO
+// Cargar variables de entorno
 dotenv.config();
 
-async function testConnection() {
-    // 🔍 Debug: Ver qué valor tiene la variable
-    console.log('📋 MONGODB_URI value:', process.env.MONGODB_URI);
-    console.log('📋 Type:', typeof process.env.MONGODB_URI);
-    console.log('📋 Length:', process.env.MONGODB_URI?.length);
+const uri = process.env.MONGODB_URI || "mongodb+srv://darieldev:darieldev123@cluster0.b3b01m6.mongodb.net/?appName=Cluster0";
 
+const clientOptions = {
+    serverApi: {
+        version: '1',
+        strict: true,
+        deprecationErrors: true
+    }
+};
+
+async function testConnection() {
     try {
-        await connectDB();
-        console.log('✅ Connection test successful');
+        console.log('🔍 Intentando conectar a MongoDB...');
+        console.log('📋 MONGODB_URI:', uri);
+
+        // Conectar a MongoDB
+        await mongoose.connect(uri, clientOptions);
+
+        // Hacer ping para verificar conexión
+        await mongoose.connection.db.admin().command({ ping: 1 });
+
+        console.log('✅ ¡Conexión exitosa a MongoDB!');
+        console.log('📦 Base de datos:', mongoose.connection.name || 'default');
+        console.log('🌐 Host:', mongoose.connection.host);
+
         process.exit(0);
     } catch (error) {
-        console.error('❌ Connection test failed:', error.message);
+        console.error('❌ Error de conexión a MongoDB:');
+        console.error('   Tipo:', error.name);
+        console.error('   Mensaje:', error.message);
         process.exit(1);
+    } finally {
+        // Cerrar la conexión
+        await mongoose.disconnect();
+        console.log('🔌 Conexión cerrada');
     }
 }
 
